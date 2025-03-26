@@ -2,8 +2,11 @@ package br.com.gustavo.orderms.service;
 
 import br.com.gustavo.orderms.Entity.OrderEntity;
 import br.com.gustavo.orderms.Entity.OrderItemEntity;
+import br.com.gustavo.orderms.controller.dto.OrderResponse;
 import br.com.gustavo.orderms.listener.dto.OrderCreatedEvent;
 import br.com.gustavo.orderms.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,6 +29,12 @@ public class OrderService {
         entity.setTotal(getTotal(event));
 
         orderRepository.save(entity);
+    }
+
+    public Page<OrderResponse> findAllByCustomerId(Long customerId, PageRequest pageRequest) {
+        var orders = orderRepository.findAllByCustomerId(customerId, pageRequest);
+
+        return orders.map(OrderResponse::fromEntity);
     }
 
     private BigDecimal getTotal(OrderCreatedEvent event) {
