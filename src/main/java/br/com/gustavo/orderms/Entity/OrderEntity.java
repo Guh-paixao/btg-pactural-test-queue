@@ -1,5 +1,6 @@
 package br.com.gustavo.orderms.Entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,6 +15,7 @@ import java.util.List;
 @Document(collection = "tb_orders")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderEntity {
     @MongoId
     private Long orderId;
